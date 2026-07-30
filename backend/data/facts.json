@@ -1,0 +1,21 @@
+{
+    "full_name": "Jagadeesh Halyal",
+    "name": "Jaggu",
+    "current_role": "Program Manager",
+    "location": "Bengaluru",
+    "email": "jnhalyal@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/jagadeesh-halyal-9a22a21a/",
+    "specialties": [
+      "Manage and Deliver: IT Projects from SAP ERP, Oracle Fusion, CRM [Salesforce, Wolken]",
+      "Manage and Deliver: Facility projects, like STPI and SEZ Exits with all compliance in place, Facility Downsize and Closure activities",
+      "Manage and Deliver: IT Infrastructure Projects, Network cable upgradtion, standardization of network and security across sites by implementing Meraki MX (Switches, Firewall, Routers)"
+    ],
+    "years_experience": 10,
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "institution": "Karnataka University",
+        "year": "1995-1999"
+      }
+    ]
+  }

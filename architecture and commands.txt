@@ -1,0 +1,208 @@
+Terraform fundamentals - Infrastructure as Code concepts
+State management - How Terraform tracks your resources
+Workspaces - Managing multiple environments
+Automated deployment - One-command infrastructure provisioning
+Environment isolation - Separate dev, test, and production
+Optional: Custom domains - Professional DNS configuration
+
+
+Part 2: Understanding Terraform
+What is Infrastructure as Code?
+    Infrastructure as Code (IaC) treats your infrastructure configuration as source code. Instead of clicking through console interfaces, you define your infrastructure in text files that can be:
+
+    Version controlled - Track changes over time
+    Reviewed - Use pull requests for infrastructure changes
+    Automated - Deploy with CI/CD pipelines
+    Repeatable - Create identical environments
+
+
+Step 1: Install Terraform
+    As of August 2025, Terraform installation has changed due to licensing updates. We'll use the official distribution.
+
+    Mac (using Homebrew):
+
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+    Mac/Linux (manual):
+
+    Visit: https://developer.hashicorp.com/terraform/install
+    Download the appropriate package for your system
+    Extract and move to PATH:
+    # Example for Mac (adjust URL for your system)
+    curl -O https://releases.hashicorp.com/terraform/1.10.0/terraform_1.10.0_darwin_amd64.zip
+    unzip terraform_1.10.0_darwin_amd64.zip
+    sudo mv terraform /usr/local/bin/
+
+Verify Installation:
+terraform --version
+
+Step 2: Update .gitignore
+    Add Terraform-specific entries to your .gitignore:
+
+    # Terraform
+    *.tfstate
+    *.tfstate.*
+    .terraform/
+    .terraform.lock.hcl
+    terraform.tfstate.d/
+    *.tfvars
+    !terraform.tfvars
+    !prod.tfvars
+
+    # Lambda packages
+    lambda-deployment.zip
+    lambda-package/
+
+    # Environment files
+    .env
+    .env.*
+
+    # Node
+    node_modules/
+    out/
+    .next/
+
+    # Python
+    __pycache__/
+    *.pyc
+    .venv/
+    uv.lock
+
+    # IDE
+    .vscode/
+    .idea/
+    *.swp
+    .DS_Store
+
+Part 3: Create Terraform Configuration
+    twin/
+    ├── backend/
+    ├── frontend/
+    ├── memory/
+    └── terraform/   (new)
+
+    Step 2: Create Provider Configuration
+    Create terraform/versions.tf:
+
+    Step 3: Define Variables
+    Create terraform/variables.tf:
+
+    Step 4: Create Main Infrastructure
+    Create terraform/main.tf:
+
+    Step 5: Define Outputs
+    Create terraform/outputs.tf:
+
+    Step 6: Create Default Variable Values
+    Create terraform/terraform.tfvars:
+
+    Step 7: Update Frontend to Use Environment Variables
+    // twin.tsx Replace with:
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/chat`, {
+
+    
+Part 4: Create Deployment Scripts
+    
+    a. Create scripts/deploy.sh:
+
+    b. For Mac/Linux users only - make it executable:
+        chmod +x scripts/deploy.sh
+
+Part 5: Deploy Development Environment
+    
+    Step 1: Initialize Terraform
+        cd terraform
+        terraform init
+
+    Step 2: Deploy Using the Script
+        Mac/Linux from the project root:
+        ./scripts/deploy.sh dev
+
+
+        The script will:
+            Build the Lambda package
+            Create a dev workspace in Terraform
+            Deploy all infrastructure
+            Build and deploy the frontend
+            Display the URLs
+
+    Step 3: Test Your Development Environment
+        Visit the CloudFront URL shown in the output
+        Test the chat functionality
+        Verify everything works as before
+
+Part 6: Deploy Test Environment
+    Now let's deploy a completely separate test environment:
+
+    Step 1: Deploy Test Environment
+    Mac/Linux:
+
+    ./scripts/deploy.sh test
+
+
+Part 7: Destroying Infrastructure
+    When you're done with an environment, you need to properly clean it up. Since S3 buckets must be empty before deletion, we'll create scripts to handle this automatically.
+
+    Step 1: Create Destroy Script for Mac/Linux
+        Create scripts/destroy.sh:
+
+    Make it executable:
+        chmod +x scripts/destroy.sh
+
+    Step 3: Using the Destroy Scripts
+        To destroy a specific environment:
+
+        Mac/Linux:
+
+        # Destroy dev environment
+        ./scripts/destroy.sh dev
+
+        # Destroy test environment
+        ./scripts/destroy.sh test
+
+        # Destroy prod environment
+        ./scripts/destroy.sh prod    
+
+        What Gets Destroyed
+
+    The destroy scripts will:
+
+        Empty S3 buckets (frontend and memory)
+        Delete all AWS resources created by Terraform:
+        Lambda functions
+        API Gateway
+        S3 buckets
+        CloudFront distributions
+        IAM roles and policies
+        Route 53 records (if custom domain)
+        ACM certificates (if custom domain)
+        Important Notes
+        CloudFront: Distributions can take 5-15 minutes to fully delete
+    
+    Workspaces: The scripts destroy resources but keep the workspace. To fully remove a workspace:
+        terraform workspace select default
+        terraform workspace delete dev  # or test, prod
+
+
+
+
+✅ Learned Infrastructure as Code with Terraform
+✅ Automated entire AWS deployment
+✅ Created multiple isolated environments
+✅ Implemented one-command deployment
+✅ Set up professional deployment scripts
+✅ Optional: Configured custom domain with SSL
+Architecture Summary
+Your Terraform manages:
+
+Terraform Configuration
+    ├── S3 Buckets (Frontend + Memory)
+    ├── Lambda Function with IAM Role
+    ├── API Gateway with Routes
+    ├── CloudFront Distribution
+    └── Optional: Route 53 + ACM Certificate
+
+Managed via Workspaces:
+    ├── dev/   (Development environment)
+    ├── test/  (Testing environment)
+    └── prod/  (Production with custom domain)
