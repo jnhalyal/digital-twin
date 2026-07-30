@@ -1,4 +1,4 @@
-project_name             = "twin-terraform"
+project_name             = "twin-cicd-github-terraform"
 environment              = "dev"
 bedrock_model_id         = "us.amazon.nova-micro-v1:0"
 lambda_timeout           = 60
