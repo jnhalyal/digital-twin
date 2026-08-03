@@ -40,8 +40,6 @@ export default function Twin() {
         setIsLoading(true);
 
         try {
-            //const response = await fetch('https://vhmplih756.execute-api.ap-south-1.amazonaws.com/chat', {
-            
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/chat`, {
                 method: 'POST',
                 headers: {
@@ -113,7 +111,6 @@ export default function Twin() {
 
                     </div>
                 )}
-
                 {messages.map((message) => (
                     <div
                         key={message.id}
