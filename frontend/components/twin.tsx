@@ -103,33 +103,27 @@ export default function Twin() {
     }, []);
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 rounded-lg shadow-lg">
-            {/* Header */}
-            <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
-                <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Bot className="w-6 h-6" />
-                    AI Digital Twin
-                </h2>
-                <p className="text-sm text-slate-300 mt-1">Your AI course companion</p>
-            </div>
+                <div className="flex flex-col h-full bg-gray-50 rounded-lg shadow-lg">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
+                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                        <Bot className="w-6 h-6" />
+                        Mecurious Me!
+                    </h2>
+                    <p className="text-sm text-slate-300 mt-1">Ask me and know me better</p>
+                </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.length === 0 && (
-                    <div className="text-center text-gray-500 mt-8">
-                        {hasAvatar ? (
-                            <img 
-                                src="/avatar.png" 
-                                alt="Digital Twin Avatar" 
-                                className="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-gray-300"
-                            />
-                        ) : (
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                    {messages.length === 0 && (
+                        <div className="text-center text-gray-500 mt-8">
                             <Bot className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                        )}
-                        <p>Hello! I&apos;m your Digital Twin.</p>
-                        <p className="text-sm mt-2">Ask me anything about AI deployment!</p>
-                    </div>
-                )}
+                            <p>Hello! I&apos;m your Digital Twin.</p>
+                            <p className="text-sm mt-2">Ask me anything about Project Management!</p>
+                            <p className="text-sm mt-2">Areas of expertise: SAP ERP, HANA. BW, SFDC, Oracle, Data Center, Infrastructure, Facility (Downsize, Closure, New Build), SEZ and STPI Exit</p>
+
+                        </div>
+                    )}
 
                 {messages.map((message) => (
                     <div
